@@ -15,6 +15,10 @@
    $ make install
    ```
 
+### Демонстрация работы
+
+[![asciicast](https://asciinema.org/a/NsZbg2Od0MEvvMyHLiNsns1R6.svg)](https://asciinema.org/a/NsZbg2Od0MEvvMyHLiNsns1R6)
+
 ### TODO:
 
 Для запуска тестов введите
