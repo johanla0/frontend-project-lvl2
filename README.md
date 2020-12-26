@@ -1,5 +1,6 @@
 ## gendiff Class Project
 
+![Node.js CI](https://github.com/johanla0/frontend-project-lvl2/workflows/Node.js%20CI/badge.svg)
 [![Actions Status](https://github.com/johanla0/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/johanla0/frontend-project-lvl2/actions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/08e7d1cbda0b5b3797ab/maintainability)](https://codeclimate.com/github/johanla0/frontend-project-lvl2/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/08e7d1cbda0b5b3797ab/test_coverage)](https://codeclimate.com/github/johanla0/frontend-project-lvl2/test_coverage)
