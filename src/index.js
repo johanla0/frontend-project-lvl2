@@ -2,19 +2,19 @@ import { Command } from 'commander';
 import fs from 'fs';
 import path from 'path';
 import _ from 'lodash';
-// import process from 'process';
 
-const getObjectFromJson = (filepath) => {
+const getObjectFromFileJson = (filepath) => {
   const json = fs.readFileSync(filepath, (err, data) => {
     if (err) throw err;
     console.log(data);
     return undefined;
   });
-  const obj = JSON.parse(json);
-  return obj;
+  return JSON.parse(json);
 };
 
-const difference = (oldObject, newObject) => {
+const gendiff = (filepath1, filepath2) => {
+  const oldObject = getObjectFromFileJson(path.resolve(filepath1));
+  const newObject = getObjectFromFileJson(path.resolve(filepath2));
   if (_.isEqual(oldObject, newObject)) { return oldObject; }
   const lines = [];
   const keysProcessed = [];
@@ -30,9 +30,9 @@ const difference = (oldObject, newObject) => {
     }
     keysProcessed.push(key);
   });
-  _.forOwn(newObject, (valueNew, key) => {
+  _.forOwn(newObject, (value, key) => {
     if (!keysProcessed.includes(key)) {
-      lines.push({ propertyName: key, value: valueNew, change: 'add' });
+      lines.push({ propertyName: key, value, change: 'add' });
     }
   });
   const result = _.sortBy(lines, ['propertyName']).map((line) => {
@@ -50,10 +50,10 @@ const difference = (oldObject, newObject) => {
   // result[key] = (_.isObject(value) && _.isObject(base[key])) ? changes(value, base[key]) : value;
   // }
   // });
-  return result.join('\r\n');
+  return result.join('\n');
 };
 
-export default () => {
+const run = () => {
   const program = new Command();
   program
     .description('Compares two configuration files and shows a difference.')
@@ -63,14 +63,13 @@ export default () => {
     .arguments('<filepath1> <filepath2>')
     .action((filepath1, filepath2) => {
       // console.log(`Current directory: ${process.cwd()}`);
-      const jsonObject1 = getObjectFromJson(path.resolve(filepath1));
-      const jsonObject2 = getObjectFromJson(path.resolve(filepath2));
-      const whatsnew = difference(jsonObject1, jsonObject2);
+      const whatsnew = gendiff(filepath1, filepath2);
       console.info(whatsnew);
       return whatsnew;
     });
-  program.parse(process.argv);
-
-  // program.option('-d, --debug', 'output extra debugging')
+  // program.option('-d, --debug', 'output extra debugging');
   // if (program.debug) console.log(program.opts());
+  program.parse(process.argv);
 };
+
+export { run as default, gendiff };
