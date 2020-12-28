@@ -20,7 +20,12 @@
 
 ### Демонстрация работы
 
+#### JSON
+
 [![asciicast](https://asciinema.org/a/NsZbg2Od0MEvvMyHLiNsns1R6.svg)](https://asciinema.org/a/NsZbg2Od0MEvvMyHLiNsns1R6)
+
+#### YAML
+[![asciicast](https://asciinema.org/a/z6oYYekhfEGkkU6IkKmr84ETO.svg)](https://asciinema.org/a/z6oYYekhfEGkkU6IkKmr84ETO)
 
 ### Для запуска тестов введите
 
