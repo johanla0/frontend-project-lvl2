@@ -1,56 +1,34 @@
 import { Command } from 'commander';
-import fs from 'fs';
 import path from 'path';
-import _ from 'lodash';
+import fs from 'fs';
+import parse from './parsers.js';
+import compare from './getDifference.js';
+import output from './output.js';
 
-const getObjectFromFileJson = (filepath) => {
-  const json = fs.readFileSync(filepath, (err, data) => {
+const gendiff = (filepath1, filepath2) => {
+  const file1 = fs.readFileSync(path.resolve(filepath1), (err, data) => {
     if (err) throw err;
     console.log(data);
     return undefined;
   });
-  return JSON.parse(json);
-};
+  const file2 = fs.readFileSync(path.resolve(filepath2), (err, data) => {
+    if (err) throw err;
+    console.log(data);
+    return undefined;
+  });
+  const extension1 = path.extname(filepath1);
+  const extension2 = path.extname(filepath2);
+  const oldObject = parse(file1, extension1);
+  const newObject = parse(file2, extension2);
 
-const gendiff = (filepath1, filepath2) => {
-  const oldObject = getObjectFromFileJson(path.resolve(filepath1));
-  const newObject = getObjectFromFileJson(path.resolve(filepath2));
-  if (_.isEqual(oldObject, newObject)) { return oldObject; }
-  const lines = [];
-  const keysProcessed = [];
-  _.forOwn(oldObject, (valueOld, key) => {
-    const valueNew = _.get(newObject, key);
-    if (valueOld === valueNew) {
-      lines.push({ propertyName: key, value: valueOld, change: 'no' });
-    } else if (valueNew === undefined) {
-      lines.push({ propertyName: key, value: valueOld, change: 'remove' });
-    } else {
-      lines.push({ propertyName: key, value: valueOld, change: 'remove' });
-      lines.push({ propertyName: key, value: valueNew, change: 'add' });
-    }
-    keysProcessed.push(key);
-  });
-  _.forOwn(newObject, (value, key) => {
-    if (!keysProcessed.includes(key)) {
-      lines.push({ propertyName: key, value, change: 'add' });
-    }
-  });
-  const result = _.sortBy(lines, ['propertyName']).map((line) => {
-    if (line.change === 'no') {
-      return (`    ${line.propertyName}: ${line.value}`);
-    } if (line.change === 'remove') {
-      return (`  - ${line.propertyName}: ${line.value}`);
-    }
-    return (`  + ${line.propertyName}: ${line.value}`);
-  });
-  result.splice(0, 0, '{');
-  result.push('}');
+  const result = compare(oldObject, newObject);
+  // console.log(JSON.stringify(result, '', 2));
+  return output(result);
   // const changes = (object, base) => _.transform(object, (result, value, key) => {
   // if (!_.isEqual(value, base[key])) {
   // result[key] = (_.isObject(value) && _.isObject(base[key])) ? changes(value, base[key]) : value;
   // }
   // });
-  return result.join('\n');
 };
 
 const run = () => {
