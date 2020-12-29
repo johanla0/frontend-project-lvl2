@@ -2,7 +2,7 @@ import { Command } from 'commander';
 import path from 'path';
 import fs from 'fs';
 import parse from './parsers.js';
-import compare from './getDifference.js';
+import compare from './compare.js';
 import output from './output.js';
 
 const gendiff = (filepath1, filepath2) => {

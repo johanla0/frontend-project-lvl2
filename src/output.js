@@ -10,7 +10,7 @@ const output = (obj) => {
       case 'removed':
         result.push(`  - ${key}: ${value?.value1}`);
         return;
-      case 'equal':
+      case 'unchanged':
         result.push(`    ${key}: ${value.value1}`);
         return;
       case 'changed':

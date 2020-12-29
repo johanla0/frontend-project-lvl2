@@ -15,7 +15,7 @@ const getResult = (object1, object2) => {
       return;
     }
     if (value1 === value2) {
-      result[key] = { value1, value2, status: 'equal' };
+      result[key] = { value1, value2, status: 'unchanged' };
       return;
     }
     if (value1 !== value2) {
