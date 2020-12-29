@@ -18,12 +18,15 @@ const gendiff = (filepath1, filepath2) => {
   });
   const type1 = path.extname(filepath1);
   const type2 = path.extname(filepath2);
-  const oldObject = parse(type1.slice(1), file1);
-  const newObject = parse(type2.slice(1), file2);
-
-  const result = compare(oldObject, newObject);
-  // console.log(JSON.stringify(result, '', 2));
-  return output(result);
+  try {
+    const oldObject = parse(type1.slice(1), file1);
+    const newObject = parse(type2.slice(1), file2);
+    const result = compare(oldObject, newObject);
+    // console.log(JSON.stringify(result, '', 2));
+    return output(result);
+  } catch (err) {
+    return err.name;
+  }
   // const changes = (object, base) => _.transform(object, (result, value, key) => {
   // if (!_.isEqual(value, base[key])) {
   // result[key] = (_.isObject(value) && _.isObject(base[key])) ? changes(value, base[key]) : value;
