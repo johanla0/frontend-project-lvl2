@@ -16,10 +16,10 @@ const gendiff = (filepath1, filepath2) => {
     console.log(data);
     return undefined;
   });
-  const extension1 = path.extname(filepath1);
-  const extension2 = path.extname(filepath2);
-  const oldObject = parse(file1, extension1);
-  const newObject = parse(file2, extension2);
+  const type1 = path.extname(filepath1);
+  const type2 = path.extname(filepath2);
+  const oldObject = parse(type1.slice(1), file1);
+  const newObject = parse(type2.slice(1), file2);
 
   const result = compare(oldObject, newObject);
   // console.log(JSON.stringify(result, '', 2));

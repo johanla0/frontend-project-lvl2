@@ -1,10 +1,11 @@
 import yaml from 'js-yaml';
 
-const getObjectFromFileJson = (data, format) => {
-  if (format === '.yml' || format === '.yaml') {
-    return yaml.safeLoad(data);
-  }
-  return JSON.parse(data);
+const mapping = {
+  yml: yaml.safeLoad,
+  yaml: yaml.safeLoad,
+  json: JSON.parse,
 };
 
-export { getObjectFromFileJson as default };
+const parse = (type, data) => mapping[type](data);
+
+export { parse as default };
