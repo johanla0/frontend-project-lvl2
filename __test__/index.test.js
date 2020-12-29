@@ -18,13 +18,13 @@ const expected = `{
 }`;
 
 test('gendiff with flat json', () => {
-  const file1 = getFixturePath('file1.json');
-  const file2 = getFixturePath('file2.json');
+  const file1 = getFixturePath('flat_file1.json');
+  const file2 = getFixturePath('flat_file2.json');
   expect(gendiff(file1, file2)).toEqual(expected);
 });
 
 test('gendiff with flat yaml', () => {
-  const file1 = getFixturePath('file1.yml');
-  const file2 = getFixturePath('file2.yml');
+  const file1 = getFixturePath('flat_file1.yml');
+  const file2 = getFixturePath('flat_file2.yml');
   expect(gendiff(file1, file2)).toEqual(expected);
 });

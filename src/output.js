@@ -3,21 +3,21 @@ import _ from 'lodash';
 const output = (obj) => {
   const result = [];
   _.forOwn(obj, (value, key) => {
-    if (value.value1 === undefined) {
-      result.push(`  + ${key}: ${value?.value2}`);
-      return;
-    }
-    if (value.value2 === undefined) {
-      result.push(`  - ${key}: ${value?.value1}`);
-      return;
-    }
-    if (value?.value1 === value?.value2) {
-      result.push(`    ${key}: ${value.value1}`);
-      return;
-    }
-    if (value?.value1 !== value?.value2) {
-      result.push(`  - ${key}: ${value.value1}`);
-      result.push(`  + ${key}: ${value.value2}`);
+    switch (value?.status) {
+      case 'added':
+        result.push(`  + ${key}: ${value?.value2}`);
+        return;
+      case 'removed':
+        result.push(`  - ${key}: ${value?.value1}`);
+        return;
+      case 'equal':
+        result.push(`    ${key}: ${value.value1}`);
+        return;
+      case 'changed':
+        result.push(`  - ${key}: ${value.value1}`);
+        result.push(`  + ${key}: ${value.value2}`);
+        break;
+      default:
     }
   });
   result.splice(0, 0, '{');
