@@ -1,34 +1,39 @@
 import _ from 'lodash';
 
-const getResult = (object1, object2) => {
-  const result = {};
-  const keysProcessed = [];
-  // const result = _.sortBy(object1, ['propertyName']).map((line) => {
-  // });
-  const orderedObject1 = Object.fromEntries(Object.entries(object1).sort());
-  const orderedObject2 = Object.fromEntries(Object.entries(object2).sort());
-  _.forOwn(orderedObject1, (value1, key) => {
-    const value2 = _.get(orderedObject2, key);
-    keysProcessed.push(key);
-    if (value2 === undefined) {
-      result[key] = { value1, status: 'removed' };
-      return;
+const compare = (oldObject, newObject) => {
+  const oldKeys = Object.keys(oldObject);
+  const newKeys = Object.keys(newObject);
+  const properties = _.sortBy(_.union(oldKeys, newKeys));
+  const build = (property) => {
+    if (_.isPlainObject(oldObject[property]) && _.isPlainObject(newObject[property])) {
+      return {
+        propertyName: property,
+        children: compare(oldObject[property], newObject[property]),
+        type: 'nested',
+      };
     }
-    if (value1 === value2) {
-      result[key] = { value1, value2, status: 'unchanged' };
-      return;
+    if (!_.has(oldObject, property)) {
+      return { propertyName: property, value2: newObject[property], type: 'added' };
     }
-    if (value1 !== value2) {
-      result[key] = { value1, value2, status: 'changed' };
+    if (!_.has(newObject, property)) {
+      return { propertyName: property, value1: oldObject[property], type: 'removed' };
     }
-  });
-  _.forOwn(orderedObject2, (value2, key) => {
-    if (!keysProcessed.includes(key)) {
-      result[key] = { value2, status: 'added' };
+    if (oldObject[property] !== newObject[property]) {
+      return {
+        propertyName: property,
+        value1: oldObject[property],
+        value2: newObject[property],
+        type: 'changed',
+      };
     }
-  });
-  // console.log(JSON.stringify(result, '', 2));
-  return result;
+    return {
+      propertyName: property,
+      value1: oldObject[property],
+      value2: oldObject[property],
+      type: 'unchanged',
+    };
+  };
+  return properties.map(build);
 };
 
-export default getResult;
+export default compare;
