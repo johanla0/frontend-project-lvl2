@@ -27,6 +27,10 @@
 #### YAML
 [![asciicast](https://asciinema.org/a/z6oYYekhfEGkkU6IkKmr84ETO.svg)](https://asciinema.org/a/z6oYYekhfEGkkU6IkKmr84ETO)
 
+#### Nested
+
+[![asciicast](https://asciinema.org/a/QJhwPabPPhga8khYyy9Tfxt0F.svg)](https://asciinema.org/a/QJhwPabPPhga8khYyy9Tfxt0F)
+
 ### Для запуска тестов введите
 
 ```
