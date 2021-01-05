@@ -28,10 +28,10 @@ test('gendiff with nested json', () => {
   expect(actual).toEqual(expected);
 });
 
-// test('gendiff with nested yaml', () => {
-//   const file1 = getFixturePath('nested_file1.yml');
-//   const file2 = getFixturePath('nested_file2.yml');
-//   const expected = expectedData.stylish;
-//   const actual = gendiff(file1, file2);
-//   expect(actual).toEqual(expected);
-// });
+test('gendiff with nested yaml', () => {
+  const file1 = getFixturePath('nested_file1.yml');
+  const file2 = getFixturePath('nested_file2.yml');
+  const expected = expectedData.stylish;
+  const actual = gendiff(file1, file2);
+  expect(actual).toEqual(expected);
+});

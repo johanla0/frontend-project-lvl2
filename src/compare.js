@@ -1,9 +1,9 @@
 import _ from 'lodash';
 
 const compare = (oldObject, newObject) => {
-  const oldKeys = Object.keys(oldObject);
-  const newKeys = Object.keys(newObject);
-  const properties = _.sortBy(_.union(oldKeys, newKeys));
+  const oldProperties = Object.keys(oldObject);
+  const newProperties = Object.keys(newObject);
+  const properties = _.sortBy(_.union(oldProperties, newProperties));
   const build = (property) => {
     if (_.isPlainObject(oldObject[property]) && _.isPlainObject(newObject[property])) {
       return {
@@ -29,7 +29,6 @@ const compare = (oldObject, newObject) => {
     return {
       propertyName: property,
       value1: oldObject[property],
-      value2: oldObject[property],
       type: 'unchanged',
     };
   };

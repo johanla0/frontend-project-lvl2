@@ -8,16 +8,17 @@ const types = {
   unchanged: ' ',
 };
 
+const indent = (depth) => ' '.repeat(depth * numOfSpaces);
+
 const stringify = (record, depth) => {
   if (!_.isPlainObject(record)) {
     return record;
   }
-  const indent = depth * numOfSpaces;
-  const inner = JSON.stringify(record, '', indent)
+  const inner = JSON.stringify(record, '', indent(depth))
     .replace(/"([^"]+)":/g, '    $1:')
     .replace(/: "([^"]+)"/g, ': $1')
     .replace(',', '')
-    .replace(/}/g, `${' '.repeat(indent)}}`);
+    .replace(/}/g, `${indent(depth)}}`);
   return inner;
 };
 
@@ -25,39 +26,36 @@ const stylish = (compared) => {
   const build = (obj, depth = 1) => obj.flatMap(({
     propertyName, children, value1, value2, type,
   }) => {
-    const indentation = ' '.repeat(depth * numOfSpaces - 4);
     switch (type) {
       case 'added':
-        return `${indentation}  ${types.added} ${propertyName}: ${stringify(
+        return `${indent(depth - 1)}  ${types.added} ${propertyName}: ${stringify(
           value2,
           depth,
         )}`;
       case 'removed':
-        return `${indentation}  ${types.removed} ${propertyName}: ${stringify(
-          value1,
-          depth,
-        )}`;
+        return `${indent(depth - 1)}  ${
+          types.removed
+        } ${propertyName}: ${stringify(value1, depth)}`;
       case 'unchanged':
-        return `${indentation}  ${types.unchanged} ${propertyName}: ${stringify(
-          value1,
-          depth,
-        )}`;
+        return `${indent(depth - 1)}  ${
+          types.unchanged
+        } ${propertyName}: ${stringify(value1, depth)}`;
       case 'changed':
         return [
-          `${indentation}  ${types.removed} ${propertyName}: ${stringify(
+          `${indent(depth - 1)}  ${types.removed} ${propertyName}: ${stringify(
             value1,
             depth,
           )}`,
-          `${indentation}  ${types.added} ${propertyName}: ${stringify(
+          `${indent(depth - 1)}  ${types.added} ${propertyName}: ${stringify(
             value2,
             depth,
           )}`,
         ];
       case 'nested':
         return [
-          `${indentation}  ${types.nested} ${propertyName}: {`,
+          `${indent(depth - 1)}  ${types.nested} ${propertyName}: {`,
           ...build(children, depth + 1),
-          `${indentation}    }`,
+          `${indent(depth - 1)}    }`,
         ];
       default:
         return undefined;
