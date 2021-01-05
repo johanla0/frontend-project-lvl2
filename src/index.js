@@ -5,7 +5,7 @@ import parse from './parsers.js';
 import compare from './compare.js';
 import output from './output.js';
 
-const gendiff = (filepath1, filepath2, style = 'stylish') => {
+const gendiff = (filepath1, filepath2, format = 'stylish') => {
   const file1 = fs.readFileSync(
     path.resolve(filepath1),
     'ascii',
@@ -30,7 +30,7 @@ const gendiff = (filepath1, filepath2, style = 'stylish') => {
   const newObject = parse(type2.slice(1), file2);
   const compared = compare(oldObject, newObject);
   // console.log(JSON.stringify(compared, '', 2));
-  return output(compared, style);
+  return output(compared, format);
 };
 
 const run = () => {
@@ -42,8 +42,7 @@ const run = () => {
     .option('-f, --format [type]', 'output format')
     .arguments('<filepath1> <filepath2>')
     .action((filepath1, filepath2) => {
-      const whatsnew = gendiff(filepath1, filepath2);
-      console.info(whatsnew);
+      console.info(gendiff(filepath1, filepath2, program.format));
     });
   // program.option('-d, --debug', 'output extra debugging');
   // if (program.debug) console.log(program.opts());

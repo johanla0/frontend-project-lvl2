@@ -1,11 +1,11 @@
 import yaml from 'js-yaml';
 
-const mapping = {
+const types = {
   yml: yaml.safeLoad,
   yaml: yaml.safeLoad,
   json: JSON.parse,
 };
 
-const parse = (type, data) => mapping[type](data);
+const parse = (type, data) => types[type](data);
 
 export { parse as default };

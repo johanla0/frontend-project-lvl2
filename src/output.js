@@ -1,9 +1,11 @@
-import stylish from './formatters.js';
+import stylish from './formatters/stylish.js';
+import plain from './formatters/plain.js';
 
 const styles = {
   stylish,
+  plain,
 };
 
-const output = (compared, style) => styles[style](compared);
+const output = (compared, format) => styles[format](compared);
 
 export default output;
