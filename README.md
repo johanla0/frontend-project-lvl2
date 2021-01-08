@@ -18,21 +18,25 @@
    $ make install
    ```
 
-### Демонстрация работы
-
-#### JSON
-
-[![asciicast](https://asciinema.org/a/NsZbg2Od0MEvvMyHLiNsns1R6.svg)](https://asciinema.org/a/NsZbg2Od0MEvvMyHLiNsns1R6)
-
-#### YAML
-[![asciicast](https://asciinema.org/a/z6oYYekhfEGkkU6IkKmr84ETO.svg)](https://asciinema.org/a/z6oYYekhfEGkkU6IkKmr84ETO)
-
-#### JSON или YAML со вложенными элементами
-
-[![asciicast](https://asciinema.org/a/QJhwPabPPhga8khYyy9Tfxt0F.svg)](https://asciinema.org/a/QJhwPabPPhga8khYyy9Tfxt0F)
-
 ### Для запуска тестов введите
 
 ```
 $ make test
 ```
+
+### Демонстрация работы
+
+#### JSON (по умолчанию --format stylish)
+
+[![asciicast](https://asciinema.org/a/NsZbg2Od0MEvvMyHLiNsns1R6.svg)](https://asciinema.org/a/NsZbg2Od0MEvvMyHLiNsns1R6)
+
+#### YAML (по умолчанию --format stylish)
+[![asciicast](https://asciinema.org/a/z6oYYekhfEGkkU6IkKmr84ETO.svg)](https://asciinema.org/a/z6oYYekhfEGkkU6IkKmr84ETO)
+
+#### JSON или YAML со вложенными элементами (по умолчанию --format stylish)
+
+[![asciicast](https://asciinema.org/a/QJhwPabPPhga8khYyy9Tfxt0F.svg)](https://asciinema.org/a/QJhwPabPPhga8khYyy9Tfxt0F)
+
+#### JSON или YAML со вложенными элементами (--format plain)
+
+[![asciicast](https://asciinema.org/a/ILkk2J9Kf6jERDaQ2kdK8qkXg.svg)](https://asciinema.org/a/ILkk2J9Kf6jERDaQ2kdK8qkXg)
