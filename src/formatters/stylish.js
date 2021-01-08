@@ -1,12 +1,6 @@
 import _ from 'lodash';
 
 const numOfSpaces = 4;
-const types = {
-  added: '+',
-  removed: '-',
-  nested: ' ',
-  unchanged: ' ',
-};
 
 const indent = (depth) => ' '.repeat(depth * numOfSpaces);
 
@@ -15,7 +9,7 @@ const stringify = (record, depth) => {
     return record;
   }
   const inner = JSON.stringify(record, '', indent(depth))
-    .replace(/"([^"]+)":/g, '    $1:')
+    .replace(/"([^"]+)":/g, `${indent(1)}$1:`)
     .replace(/: "([^"]+)"/g, ': $1')
     .replace(',', '')
     .replace(/}/g, `${indent(depth)}}`);
@@ -28,32 +22,19 @@ const stylish = (compared) => {
   }) => {
     switch (type) {
       case 'added':
-        return `${indent(depth - 1)}  ${types.added} ${propertyName}: ${stringify(
-          value2,
-          depth,
-        )}`;
+        return `${indent(depth - 1)}  + ${propertyName}: ${stringify(value2, depth)}`;
       case 'removed':
-        return `${indent(depth - 1)}  ${
-          types.removed
-        } ${propertyName}: ${stringify(value1, depth)}`;
+        return `${indent(depth - 1)}  - ${propertyName}: ${stringify(value1, depth)}`;
       case 'unchanged':
-        return `${indent(depth - 1)}  ${
-          types.unchanged
-        } ${propertyName}: ${stringify(value1, depth)}`;
-      case 'changed':
+        return `${indent(depth - 1)}    ${propertyName}: ${stringify(value1, depth)}`;
+      case 'updated':
         return [
-          `${indent(depth - 1)}  ${types.removed} ${propertyName}: ${stringify(
-            value1,
-            depth,
-          )}`,
-          `${indent(depth - 1)}  ${types.added} ${propertyName}: ${stringify(
-            value2,
-            depth,
-          )}`,
+          `${indent(depth - 1)}  - ${propertyName}: ${stringify(value1, depth)}`,
+          `${indent(depth - 1)}  + ${propertyName}: ${stringify(value2, depth)}`,
         ];
       case 'nested':
         return [
-          `${indent(depth - 1)}  ${types.nested} ${propertyName}: {`,
+          `${indent(depth - 1)}    ${propertyName}: {`,
           ...build(children, depth + 1),
           `${indent(depth - 1)}    }`,
         ];
@@ -63,11 +44,7 @@ const stylish = (compared) => {
   });
 
   const result = build(compared);
-  return [
-    '{',
-    ...result,
-    '}',
-  ].join('\n');
+  return ['{', ...result, '}'].join('\n');
 };
 
 export { stylish as default };

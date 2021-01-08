@@ -2,7 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { test, expect } from '@jest/globals';
-import { gendiff } from '../src/index.js';
+import gendiff from '../src/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,7 +20,7 @@ beforeAll(() => {
   expectedData.plain = plainData.trim();
 });
 
-test('gendiff with nested json', () => {
+test('json stylish', () => {
   const file1 = getFixturePath('nested_file1.json');
   const file2 = getFixturePath('nested_file2.json');
   const expected = expectedData.stylish;
@@ -28,10 +28,26 @@ test('gendiff with nested json', () => {
   expect(actual).toEqual(expected);
 });
 
-test('gendiff with nested yaml', () => {
+test('yaml stylish', () => {
   const file1 = getFixturePath('nested_file1.yml');
   const file2 = getFixturePath('nested_file2.yml');
   const expected = expectedData.stylish;
   const actual = gendiff(file1, file2);
+  expect(actual).toEqual(expected);
+});
+
+test('json plain', () => {
+  const file1 = getFixturePath('nested_file1.json');
+  const file2 = getFixturePath('nested_file2.json');
+  const expected = expectedData.plain;
+  const actual = gendiff(file1, file2, 'plain');
+  expect(actual).toEqual(expected);
+});
+
+test('yaml plain', () => {
+  const file1 = getFixturePath('nested_file1.yml');
+  const file2 = getFixturePath('nested_file2.yml');
+  const expected = expectedData.plain;
+  const actual = gendiff(file1, file2, 'plain');
   expect(actual).toEqual(expected);
 });
