@@ -33,11 +33,9 @@ const stylish = (compared) => {
           `${indent(depth - 1)}  + ${propertyName}: ${stringify(value2, depth)}`,
         ];
       case 'nested':
-        return [
-          `${indent(depth - 1)}    ${propertyName}: {`,
+        return [`${indent(depth)}${propertyName}: {`,
           ...build(children, depth + 1),
-          `${indent(depth - 1)}    }`,
-        ];
+          `${indent(depth)}}`];
       default:
         return undefined;
     }
