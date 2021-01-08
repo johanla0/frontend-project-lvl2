@@ -27,7 +27,7 @@
 #### YAML
 [![asciicast](https://asciinema.org/a/z6oYYekhfEGkkU6IkKmr84ETO.svg)](https://asciinema.org/a/z6oYYekhfEGkkU6IkKmr84ETO)
 
-#### Nested
+#### JSON или YAML со вложенными элементами
 
 [![asciicast](https://asciinema.org/a/QJhwPabPPhga8khYyy9Tfxt0F.svg)](https://asciinema.org/a/QJhwPabPPhga8khYyy9Tfxt0F)
 
