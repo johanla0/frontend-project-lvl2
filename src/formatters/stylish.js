@@ -37,7 +37,11 @@ const stylish = (compared) => {
           ...build(children, depth + 1),
           `${indent(depth)}}`];
       default:
-        return undefined;
+        // eslint-disable-next-line no-case-declarations
+        const err = new Error();
+        err.message = `Unknown node type ${type}`;
+        err.number = 3;
+        throw err;
     }
   });
 
