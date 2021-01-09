@@ -34,11 +34,7 @@ const plain = (compared) => {
       case 'nested':
         return [...build(children, `${getAcc(acc)}${propertyName}`)];
       default:
-        // eslint-disable-next-line no-case-declarations
-        const err = new Error();
-        err.message = `Unknown node type ${type}`;
-        err.number = 3;
-        throw err;
+        throw new Error(`Unknown node type ${type}`);
     }
   });
   const result = build(compared);

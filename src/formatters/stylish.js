@@ -37,11 +37,7 @@ const stylish = (compared) => {
           ...build(children, depth + 1),
           `${indent(depth)}}`];
       default:
-        // eslint-disable-next-line no-case-declarations
-        const err = new Error();
-        err.message = `Unknown node type ${type}`;
-        err.number = 3;
-        throw err;
+        throw new Error(`Unknown node type ${type}`);
     }
   });
 

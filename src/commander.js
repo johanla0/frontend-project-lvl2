@@ -13,7 +13,7 @@ const run = () => {
         console.info(gendiff(filepath1, filepath2, program.format));
       } catch (err) {
         console.error(err.message);
-        process.exit(err.number);
+        process.exit(1);
       }
     });
   // program.option('-d, --debug', 'render extra debugging');
