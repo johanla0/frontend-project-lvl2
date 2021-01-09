@@ -10,10 +10,7 @@ const styles = {
 
 const render = (compared, format) => {
   if (styles[format] === undefined) {
-    const err = new Error();
-    err.message = `Format ${format} is not supported`;
-    err.number = 1;
-    throw err;
+    throw new Error(`Format ${format} is not supported`);
   }
   return styles[format](compared);
 };
