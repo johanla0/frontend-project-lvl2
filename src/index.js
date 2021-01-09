@@ -2,7 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import parse from './parsers.js';
 import compare from './compare.js';
-import render from './formatters/render.js';
+import render from './formatters/index.js';
 
 const gendiff = (filepath1, filepath2, format = 'stylish') => {
   const file1 = fs.readFileSync(
@@ -28,7 +28,6 @@ const gendiff = (filepath1, filepath2, format = 'stylish') => {
   const oldObject = parse(type1.slice(1), file1);
   const newObject = parse(type2.slice(1), file2);
   const compared = compare(oldObject, newObject);
-  // console.log(JSON.stringify(compared, '', 2));
   return render(compared, format);
 };
 

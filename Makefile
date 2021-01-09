@@ -12,5 +12,7 @@ publish:
 	npm publish --dry-run
 lint:
 	npx eslint .
+uncommit:
+	git reset --soft HEAD^
 
 .PHONY: test

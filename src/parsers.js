@@ -9,7 +9,7 @@ const types = {
 const parse = (type, data) => {
   if (types[type] === undefined) {
     const err = new Error();
-    err.message = `Unsupported file ${type === '' ? 'without extension' : type}`;
+    err.message = `File ${type === '' ? 'without extension' : type} is not supported`;
     err.number = 2;
     throw err;
   }
