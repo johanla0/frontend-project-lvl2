@@ -40,3 +40,7 @@ $ make test
 #### JSON или YAML со вложенными элементами (--format plain)
 
 [![asciicast](https://asciinema.org/a/ILkk2J9Kf6jERDaQ2kdK8qkXg.svg)](https://asciinema.org/a/ILkk2J9Kf6jERDaQ2kdK8qkXg)
+
+#### JSON или YAML со вложенными элементами (--format json)
+
+[![asciicast](https://asciinema.org/a/3wnAMtnzUNaYijZVKYTn5ZRXP.svg)](https://asciinema.org/a/3wnAMtnzUNaYijZVKYTn5ZRXP)
