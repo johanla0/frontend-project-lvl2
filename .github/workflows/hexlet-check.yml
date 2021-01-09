@@ -12,6 +12,8 @@ on:
   push:
     branches:
       - '**'
+    tags:
+      - '**'
 
 jobs:
   build:
@@ -19,6 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
       - name: Hexlet project check
         uses: hexlet/project-action@release
+        with:
+          hexlet-id: ${{ secrets.HEXLET_ID }}
