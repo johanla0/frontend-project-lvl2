@@ -6,10 +6,10 @@ const compare = (oldObject, newObject) => {
   const properties = _.sortBy(_.union(oldProperties, newProperties));
   const build = (property) => {
     if (!_.has(oldObject, property)) {
-      return { propertyName: property, value2: newObject[property], type: 'added' };
+      return { propertyName: property, newValue: newObject[property], type: 'added' };
     }
     if (!_.has(newObject, property)) {
-      return { propertyName: property, value1: oldObject[property], type: 'removed' };
+      return { propertyName: property, oldValue: oldObject[property], type: 'removed' };
     }
     if (
       _.isPlainObject(oldObject[property])
@@ -24,14 +24,14 @@ const compare = (oldObject, newObject) => {
     if (oldObject[property] !== newObject[property]) {
       return {
         propertyName: property,
-        value1: oldObject[property],
-        value2: newObject[property],
+        oldValue: oldObject[property],
+        newValue: newObject[property],
         type: 'updated',
       };
     }
     return {
       propertyName: property,
-      value1: oldObject[property],
+      oldValue: oldObject[property],
       type: 'unchanged',
     };
   };

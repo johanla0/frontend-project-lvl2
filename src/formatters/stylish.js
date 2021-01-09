@@ -18,19 +18,19 @@ const stringify = (record, depth) => {
 
 const stylish = (compared) => {
   const build = (obj, depth = 1) => obj.flatMap(({
-    propertyName, children, value1, value2, type,
+    propertyName, children, oldValue, newValue, type,
   }) => {
     switch (type) {
       case 'added':
-        return `${indent(depth - 1)}  + ${propertyName}: ${stringify(value2, depth)}`;
+        return `${indent(depth - 1)}  + ${propertyName}: ${stringify(newValue, depth)}`;
       case 'removed':
-        return `${indent(depth - 1)}  - ${propertyName}: ${stringify(value1, depth)}`;
+        return `${indent(depth - 1)}  - ${propertyName}: ${stringify(oldValue, depth)}`;
       case 'unchanged':
-        return `${indent(depth - 1)}    ${propertyName}: ${stringify(value1, depth)}`;
+        return `${indent(depth - 1)}    ${propertyName}: ${stringify(oldValue, depth)}`;
       case 'updated':
         return [
-          `${indent(depth - 1)}  - ${propertyName}: ${stringify(value1, depth)}`,
-          `${indent(depth - 1)}  + ${propertyName}: ${stringify(value2, depth)}`,
+          `${indent(depth - 1)}  - ${propertyName}: ${stringify(oldValue, depth)}`,
+          `${indent(depth - 1)}  + ${propertyName}: ${stringify(newValue, depth)}`,
         ];
       case 'nested':
         return [`${indent(depth)}${propertyName}: {`,

@@ -10,16 +10,16 @@ const getAcc = (acc) => (acc === '' ? '' : `${acc}.`);
 
 const plain = (compared) => {
   const build = (obj, acc = '') => obj.flatMap(({
-    propertyName, children, value1, value2, type,
+    propertyName, children, oldValue, newValue, type,
   }) => {
     switch (type) {
       case 'added':
-        return [`Property '${getAcc(acc)}${propertyName}' was added with value: ${getValue(value2)}`];
+        return [`Property '${getAcc(acc)}${propertyName}' was added with value: ${getValue(newValue)}`];
       case 'removed':
         return [`Property '${getAcc(acc)}${propertyName}' was removed`];
       case 'updated':
         return [
-          `Property '${getAcc(acc)}${propertyName}' was updated. From ${getValue(value1)} to ${getValue(value2)}`,
+          `Property '${getAcc(acc)}${propertyName}' was updated. From ${getValue(oldValue)} to ${getValue(newValue)}`,
         ];
       case 'nested':
         return [...build(children, `${getAcc(acc)}${propertyName}`)];
