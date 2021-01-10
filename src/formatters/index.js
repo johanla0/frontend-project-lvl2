@@ -8,11 +8,11 @@ const styles = {
   json,
 };
 
-const render = (compared, format) => {
+const render = (tree, format) => {
   if (styles[format] === undefined) {
     throw new Error(`Format ${format} is not supported`);
   }
-  return styles[format](compared);
+  return styles[format](tree);
 };
 
 export default render;
