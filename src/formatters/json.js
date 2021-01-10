@@ -1,3 +1,1 @@
-const json = (compared) => JSON.stringify(compared);
-
-export default json;
+export default (tree) => JSON.stringify(tree);

@@ -16,8 +16,8 @@ const stringify = (record, depth) => {
   return inner;
 };
 
-const stylish = (compared) => {
-  const build = (obj, depth = 1) => obj.flatMap(({
+const stylish = (tree) => {
+  const represent = (obj, depth = 1) => obj.flatMap(({
     propertyName, children, oldValue, newValue, type,
   }) => {
     switch (type) {
@@ -34,14 +34,14 @@ const stylish = (compared) => {
         ];
       case 'nested':
         return [`${indent(depth)}${propertyName}: {`,
-          ...build(children, depth + 1),
+          ...represent(children, depth + 1),
           `${indent(depth)}}`];
       default:
         throw new Error(`Unknown node type ${type}`);
     }
   });
 
-  const result = build(compared);
+  const result = represent(tree);
   return ['{', ...result, '}'].join('\n');
 };
 

@@ -2,14 +2,14 @@ import _ from 'lodash';
 
 const getValue = (value) => {
   if (_.isPlainObject(value)) { return '[complex value]'; }
-  if (typeof value === 'string') { return `'${value}'`; }
+  if (_.isString(value)) { return `'${value}'`; }
   return value;
 };
 
 const getAcc = (acc) => (acc === '' ? '' : `${acc}.`);
 
-const plain = (compared) => {
-  const build = (obj, acc = '') => obj.flatMap(({
+const plain = (tree) => {
+  const represent = (obj, acc = '') => obj.flatMap(({
     propertyName, children, oldValue, newValue, type,
   }) => {
     switch (type) {
@@ -32,12 +32,12 @@ const plain = (compared) => {
           )} to ${getValue(newValue)}`,
         ];
       case 'nested':
-        return [...build(children, `${getAcc(acc)}${propertyName}`)];
+        return [...represent(children, `${getAcc(acc)}${propertyName}`)];
       default:
         throw new Error(`Unknown node type ${type}`);
     }
   });
-  const result = build(compared);
+  const result = represent(tree);
   return [...result].filter((elem) => elem !== '').join('\n');
 };
 

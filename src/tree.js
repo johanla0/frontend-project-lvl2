@@ -1,10 +1,10 @@
 import _ from 'lodash';
 
-const compare = (oldObject, newObject) => {
+const getTree = (oldObject, newObject) => {
   const oldProperties = Object.keys(oldObject);
   const newProperties = Object.keys(newObject);
   const properties = _.sortBy(_.union(oldProperties, newProperties));
-  const build = (property) => {
+  const buildTree = (property) => {
     if (!_.has(oldObject, property)) {
       return { propertyName: property, newValue: newObject[property], type: 'added' };
     }
@@ -17,7 +17,7 @@ const compare = (oldObject, newObject) => {
     ) {
       return {
         propertyName: property,
-        children: compare(oldObject[property], newObject[property]),
+        children: getTree(oldObject[property], newObject[property]),
         type: 'nested',
       };
     }
@@ -35,7 +35,7 @@ const compare = (oldObject, newObject) => {
       type: 'unchanged',
     };
   };
-  return properties.map(build);
+  return properties.map(buildTree);
 };
 
-export default compare;
+export default getTree;
