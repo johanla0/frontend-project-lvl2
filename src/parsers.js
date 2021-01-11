@@ -6,7 +6,7 @@ const types = {
   json: JSON.parse,
 };
 
-const parse = (type, data) => {
+const parse = (data, type) => {
   if (types[type] === undefined) {
     throw new Error(
       `File ${type === '' ? 'without extension' : type} is not supported`,

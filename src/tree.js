@@ -1,10 +1,10 @@
 import _ from 'lodash';
 
-const getTree = (oldObject, newObject) => {
+const buildTree = (oldObject, newObject) => {
   const oldProperties = Object.keys(oldObject);
   const newProperties = Object.keys(newObject);
   const properties = _.sortBy(_.union(oldProperties, newProperties));
-  const buildTree = (property) => {
+  const compare = (property) => {
     if (!_.has(oldObject, property)) {
       return { propertyName: property, newValue: newObject[property], type: 'added' };
     }
@@ -17,7 +17,7 @@ const getTree = (oldObject, newObject) => {
     ) {
       return {
         propertyName: property,
-        children: getTree(oldObject[property], newObject[property]),
+        children: buildTree(oldObject[property], newObject[property]),
         type: 'nested',
       };
     }
@@ -35,7 +35,7 @@ const getTree = (oldObject, newObject) => {
       type: 'unchanged',
     };
   };
-  return properties.map(buildTree);
+  return properties.map(compare);
 };
 
-export default getTree;
+export default buildTree;
