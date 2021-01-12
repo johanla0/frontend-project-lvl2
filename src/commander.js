@@ -16,8 +16,6 @@ const run = () => {
         process.exit(1);
       }
     });
-  // program.option('-d, --debug', 'render extra debugging');
-  // if (program.debug) console.log(program.opts());
   program.parse(process.argv);
 };
 

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const getValue = (value) => {
+const formatValue = (value) => {
   if (_.isPlainObject(value)) { return '[complex value]'; }
   if (_.isString(value)) { return `'${value}'`; }
   return value;
@@ -17,19 +17,19 @@ const plain = (tree) => {
         return [
           `Property '${getAcc(
             acc,
-          )}${propertyName}' was added with value: ${getValue(newValue)}`,
+          )}${propertyName}' was added with value: ${formatValue(newValue)}`,
         ];
       case 'removed':
         return [`Property '${getAcc(acc)}${propertyName}' was removed`];
       case 'unchanged':
-        return '';
+        return null;
       case 'updated':
         return [
           `Property '${getAcc(
             acc,
-          )}${propertyName}' was updated. From ${getValue(
+          )}${propertyName}' was updated. From ${formatValue(
             oldValue,
-          )} to ${getValue(newValue)}`,
+          )} to ${formatValue(newValue)}`,
         ];
       case 'nested':
         return [...represent(children, `${getAcc(acc)}${propertyName}`)];
@@ -38,7 +38,7 @@ const plain = (tree) => {
     }
   });
   const result = represent(tree);
-  return [...result].filter((elem) => elem !== '').join('\n');
+  return [...result].filter((elem) => elem !== null).join('\n');
 };
 
-export { plain as default };
+export default plain;

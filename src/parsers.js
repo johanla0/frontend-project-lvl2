@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import yaml from 'js-yaml';
 
 const types = {
@@ -7,7 +8,7 @@ const types = {
 };
 
 const parse = (data, type) => {
-  if (types[type] === undefined) {
+  if (!_.has(types, type)) {
     throw new Error(
       `File ${type === '' ? 'without extension' : type} is not supported`,
     );
@@ -15,4 +16,4 @@ const parse = (data, type) => {
   return types[type](data);
 };
 
-export { parse as default };
+export default parse;

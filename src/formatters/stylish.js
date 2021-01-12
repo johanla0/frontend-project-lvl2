@@ -45,4 +45,4 @@ const stylish = (tree) => {
   return ['{', ...result, '}'].join('\n');
 };
 
-export { stylish as default };
+export default stylish;
