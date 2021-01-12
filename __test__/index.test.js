@@ -12,59 +12,37 @@ const __dirname = path.dirname(__filename);
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
 
-const stylishData = readFile('stylish_expected');
-const plainData = readFile('plain_expected');
-const jsonData = readFile('json_expected');
-const expectedStylish = stylishData.trim();
-const expectedPlain = plainData.trim();
-const expectedJson = jsonData.trim();
-
-test('json format stylish', () => {
-  const file1 = getFixturePath('nested_file1.json');
-  const file2 = getFixturePath('nested_file2.json');
-  const expected = expectedStylish;
-  const actual = gendiff(file1, file2);
-  expect(actual).toEqual(expected, 'stylish');
+test.each([
+  ['json', 'stylish'],
+  ['yml', 'stylish'],
+])('%s files format as %s', (extension, format) => {
+  const file1 = getFixturePath(`nested_file1.${extension}`);
+  const file2 = getFixturePath(`nested_file2.${extension}`);
+  const stylishData = readFile('stylish_expected');
+  const expected = stylishData.trim();
+  expect(gendiff(file1, file2, format)).toEqual(expected);
 });
 
-test('yaml format stylish', () => {
-  const file1 = getFixturePath('nested_file1.yml');
-  const file2 = getFixturePath('nested_file2.yml');
-  const expected = expectedStylish;
-  const actual = gendiff(file1, file2);
-  expect(actual).toEqual(expected, 'stylish');
+test.each([
+  ['json', 'plain'],
+  ['yml', 'plain'],
+])('%s files format as %s', (extension, format) => {
+  const file1 = getFixturePath(`nested_file1.${extension}`);
+  const file2 = getFixturePath(`nested_file2.${extension}`);
+  const plainData = readFile('plain_expected');
+  const expected = plainData.trim();
+  expect(gendiff(file1, file2, format)).toEqual(expected);
 });
 
-test('json format plain', () => {
-  const file1 = getFixturePath('nested_file1.json');
-  const file2 = getFixturePath('nested_file2.json');
-  const expected = expectedPlain;
-  const actual = gendiff(file1, file2, 'plain');
-  expect(actual).toEqual(expected);
-});
-
-test('yaml format plain', () => {
-  const file1 = getFixturePath('nested_file1.yml');
-  const file2 = getFixturePath('nested_file2.yml');
-  const expected = expectedPlain;
-  const actual = gendiff(file1, file2, 'plain');
-  expect(actual).toEqual(expected);
-});
-
-test('json format json', () => {
-  const file1 = getFixturePath('nested_file1.json');
-  const file2 = getFixturePath('nested_file2.json');
-  const expected = expectedJson;
-  const actual = gendiff(file1, file2, 'json');
-  expect(actual).toEqual(expected);
-});
-
-test('yaml format json', () => {
-  const file1 = getFixturePath('nested_file1.yml');
-  const file2 = getFixturePath('nested_file2.yml');
-  const expected = expectedJson;
-  const actual = gendiff(file1, file2, 'json');
-  expect(actual).toEqual(expected);
+test.each([
+  ['json', 'json'],
+  ['yml', 'json'],
+])('%s files format as %s', (extension, format) => {
+  const file1 = getFixturePath(`nested_file1.${extension}`);
+  const file2 = getFixturePath(`nested_file2.${extension}`);
+  const jsonData = readFile('json_expected');
+  const expected = jsonData.trim();
+  expect(gendiff(file1, file2, format)).toEqual(expected);
 });
 
 test('parse throws extension error', () => {
