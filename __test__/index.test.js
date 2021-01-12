@@ -15,45 +15,26 @@ const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8'
 test.each([
   ['json', 'stylish'],
   ['yml', 'stylish'],
-])('%s files format as %s', (extension, format) => {
-  const file1 = getFixturePath(`nested_file1.${extension}`);
-  const file2 = getFixturePath(`nested_file2.${extension}`);
-  const stylishData = readFile('stylish_expected');
-  const expected = stylishData.trim();
-  expect(gendiff(file1, file2, format)).toEqual(expected);
-});
-
-test.each([
   ['json', 'plain'],
   ['yml', 'plain'],
-])('%s files format as %s', (extension, format) => {
-  const file1 = getFixturePath(`nested_file1.${extension}`);
-  const file2 = getFixturePath(`nested_file2.${extension}`);
-  const plainData = readFile('plain_expected');
-  const expected = plainData.trim();
-  expect(gendiff(file1, file2, format)).toEqual(expected);
-});
-
-test.each([
   ['json', 'json'],
   ['yml', 'json'],
 ])('%s files format as %s', (extension, format) => {
   const file1 = getFixturePath(`nested_file1.${extension}`);
   const file2 = getFixturePath(`nested_file2.${extension}`);
-  const jsonData = readFile('json_expected');
-  const expected = jsonData.trim();
+  const data = readFile(`${format}_expected`);
+  const expected = data.trim();
   expect(gendiff(file1, file2, format)).toEqual(expected);
 });
 
 test('parse throws extension error', () => {
-  const file1 = getFixturePath('nested_file1.yml');
   expect(() => {
-    parse(file1, 'unsupported_extension');
-  }).toThrow();
+    parse('imagine_a_stream_of_bytes', 'with_unsupported_extension');
+  }).toThrowError('extension');
 });
 
 test('render throws format error', () => {
   expect(() => {
-    render('imagine_this_is_tree', 'unsupported_format');
-  }).toThrow();
+    render('imagine_a_tree', 'and_unsupported_format');
+  }).toThrowError('Format');
 });
