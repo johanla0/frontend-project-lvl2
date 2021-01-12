@@ -3,6 +3,8 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { test, expect } from '@jest/globals';
 import gendiff from '../src/index.js';
+import parse from '../src/parsers.js';
+import render from '../src/formatters/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -63,4 +65,17 @@ test('yaml format json', () => {
   const expected = expectedJson;
   const actual = gendiff(file1, file2, 'json');
   expect(actual).toEqual(expected);
+});
+
+test('parse throws extension error', () => {
+  const file1 = getFixturePath('nested_file1.yml');
+  expect(() => {
+    parse(file1, 'unsupported_extension');
+  }).toThrow();
+});
+
+test('render throws format error', () => {
+  expect(() => {
+    render('imagine_this_is_tree', 'unsupported_format');
+  }).toThrow();
 });
