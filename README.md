@@ -24,6 +24,19 @@
 $ make test
 ```
 
+### Использование
+
+```
+Usage: gendiff [options] <filepath1> <filepath2>
+
+Compares two configuration files and shows a difference.
+
+Options:
+  -V, --version        output the version number
+  -f, --format [type]  render format (default: "stylish")
+  -h, --help           render usage information
+```
+
 ### Демонстрация работы
 
 #### JSON (по умолчанию --format stylish)
