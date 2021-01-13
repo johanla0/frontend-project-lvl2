@@ -6,7 +6,7 @@ const formatValue = (value) => {
   return value;
 };
 
-const getAcc = (acc) => (acc === '' ? '' : `${acc}.`);
+const formatName = (acc) => (acc === '' ? '' : `${acc}.`);
 
 const plain = (tree) => {
   const represent = (obj, acc = '') => obj.flatMap(({
@@ -14,31 +14,21 @@ const plain = (tree) => {
   }) => {
     switch (type) {
       case 'added':
-        return [
-          `Property '${getAcc(
-            acc,
-          )}${propertyName}' was added with value: ${formatValue(newValue)}`,
-        ];
+        return `Property '${formatName(acc)}${propertyName}' was added with value: ${formatValue(newValue)}`;
       case 'removed':
-        return [`Property '${getAcc(acc)}${propertyName}' was removed`];
+        return `Property '${formatName(acc)}${propertyName}' was removed`;
       case 'unchanged':
         return null;
       case 'updated':
-        return [
-          `Property '${getAcc(
-            acc,
-          )}${propertyName}' was updated. From ${formatValue(
-            oldValue,
-          )} to ${formatValue(newValue)}`,
-        ];
+        return `Property '${formatName(acc)}${propertyName}' was updated. From ${formatValue(oldValue)} to ${formatValue(newValue)}`;
       case 'nested':
-        return [...represent(children, `${getAcc(acc)}${propertyName}`)];
+        return represent(children, `${formatName(acc)}${propertyName}`);
       default:
         throw new Error(`Unknown node type ${type}`);
     }
   });
   const result = represent(tree);
-  return [...result].filter((elem) => elem !== null).join('\n');
+  return result.filter((elem) => elem !== null).join('\n');
 };
 
 export default plain;
