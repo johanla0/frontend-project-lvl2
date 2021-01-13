@@ -27,14 +27,14 @@ test.each([
   expect(gendiff(file1, file2, format)).toEqual(expected);
 });
 
-test('parse throws extension error', () => {
+test('parse throws unsupported error', () => {
   expect(() => {
-    parse('imagine_a_stream_of_bytes', 'with_unsupported_extension');
-  }).toThrowError('extension');
+    parse('imagine_a_stream_of_bytes', 'with_unsupported_mime_type');
+  }).toThrowError('unsupported');
 });
 
-test('render throws format error', () => {
+test('render throws unsupported error', () => {
   expect(() => {
     render('imagine_a_tree', 'and_unsupported_format');
-  }).toThrowError('Format');
+  }).toThrowError('unsupported');
 });

@@ -28,7 +28,8 @@
   "dependencies": {
     "commander": "^6.2.1",
     "js-yaml": "^3.14.1",
-    "lodash": "^4.17.20"
+    "lodash": "^4.17.20",
+    "mime-types": "^2.1.28"
   },
   "devDependencies": {
     "@jest/globals": "^26.6.2",
