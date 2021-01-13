@@ -30,11 +30,11 @@ test.each([
 test('parse throws unsupported error', () => {
   expect(() => {
     parse('imagine_a_stream_of_bytes', 'with_unsupported_mime_type');
-  }).toThrowError('unsupported');
+  }).toThrowError('not supported');
 });
 
 test('render throws unsupported error', () => {
   expect(() => {
     render('imagine_a_tree', 'and_unsupported_format');
-  }).toThrowError('unsupported');
+  }).toThrowError('not supported');
 });
