@@ -27,8 +27,7 @@ const plain = (tree) => {
         throw new Error(`Unknown node type ${type}`);
     }
   });
-  const result = represent(tree);
-  return result.filter((elem) => elem !== null).join('\n');
+  return represent(tree).filter((elem) => elem !== null).join('\n');
 };
 
 export default plain;
