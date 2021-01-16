@@ -6,7 +6,7 @@ const run = () => {
     .description('Compares two configuration files and shows a difference.')
     .version('0.0.1')
     .helpOption('-h, --help', 'render usage information')
-    .option('-f, --format [type]', 'render format', 'stylish')
+    .option('-f, --format [type]', 'render format: stylish / plain / json', 'stylish')
     .arguments('<filepath1> <filepath2>')
     .action((filepath1, filepath2) => {
       try {

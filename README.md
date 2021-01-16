@@ -33,7 +33,7 @@ Compares two configuration files and shows a difference.
 
 Options:
   -V, --version        output the version number
-  -f, --format [type]  render format (default: "stylish")
+  -f, --format [type]  render format: stylish / plain / json (default: "stylish")
   -h, --help           render usage information
 ```
 
