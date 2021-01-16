@@ -17,7 +17,7 @@ const stringify = (record, depth) => {
   const entries = Object.entries(record).flatMap(
     ([key, value]) => `${indent(depth + 1)}${key}: ${stringify(value, depth + 1)}`,
   );
-  return ['{', ...entries, `${indent(depth)}}`].join('\n');
+  return `{\n${entries.join('\n')}\n${indent(depth)}}`;
 };
 
 const stylish = (tree) => {
