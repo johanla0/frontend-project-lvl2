@@ -2,19 +2,26 @@ import _ from 'lodash';
 
 const numOfSpaces = 4;
 
+const types = {
+  added: '  + ',
+  removed: '  - ',
+  unchanged: '    ',
+  nested: '    ',
+};
+
 const indent = (depth) => ' '.repeat(depth * numOfSpaces);
 
 const stringify = (record, depth) => {
-  if (!_.isPlainObject(record)) {
+  if (!_.isObject(record)) {
     return record;
   }
-  const inner = JSON.stringify(record, '', indent(depth))
-    .replace(/"([^"]+)":/g, `${indent(1)}$1:`)
-    .replace(/: "([^"]+)"/g, ': $1')
-    .replace(',', '')
-    .replace(/}/g, `${indent(depth)}}`);
-  return inner;
+  const entries = Object.entries(record).flatMap(
+    ([key, value]) => `${indent(depth + 1)}${key}: ${stringify(value, depth + 1)}`,
+  );
+  return ['{', ...entries, `${indent(depth)}}`].join('\n');
 };
+
+const formatProperty = (depth, type, propertyName) => `${indent(depth - 1)}${types[type]}${propertyName}`;
 
 const stylish = (tree) => {
   const represent = (obj, depth = 1) => obj.flatMap(({
@@ -22,20 +29,33 @@ const stylish = (tree) => {
   }) => {
     switch (type) {
       case 'added':
-        return `${indent(depth - 1)}  + ${propertyName}: ${stringify(newValue, depth)}`;
+        return `${formatProperty(depth, type, propertyName)}: ${stringify(
+          newValue,
+          depth,
+        )}`;
       case 'removed':
-        return `${indent(depth - 1)}  - ${propertyName}: ${stringify(oldValue, depth)}`;
       case 'unchanged':
-        return `${indent(depth - 1)}    ${propertyName}: ${stringify(oldValue, depth)}`;
+        return `${formatProperty(depth, type, propertyName)}: ${stringify(
+          oldValue,
+          depth,
+        )}`;
       case 'updated':
         return [
-          `${indent(depth - 1)}  - ${propertyName}: ${stringify(oldValue, depth)}`,
-          `${indent(depth - 1)}  + ${propertyName}: ${stringify(newValue, depth)}`,
+          `${formatProperty(depth, 'removed', propertyName)}: ${stringify(
+            oldValue,
+            depth,
+          )}`,
+          `${formatProperty(depth, 'added', propertyName)}: ${stringify(
+            newValue,
+            depth,
+          )}`,
         ];
       case 'nested':
-        return [`${indent(depth)}${propertyName}: {`,
+        return [
+          `${formatProperty(depth, type, propertyName)}: {`,
           ...represent(children, depth + 1),
-          `${indent(depth)}}`];
+          `${indent(depth)}}`,
+        ];
       default:
         throw new Error(`Unknown node type ${type}`);
     }

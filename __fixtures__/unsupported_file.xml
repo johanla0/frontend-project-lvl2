@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+   <common>
+      <setting1>Value 1</setting1>
+      <setting2>200</setting2>
+      <setting3>true</setting3>
+      <setting6>
+         <doge>
+            <wow />
+         </doge>
+         <key>value</key>
+      </setting6>
+   </common>
+   <group1>
+      <baz>bas</baz>
+      <foo>bar</foo>
+      <nest>
+         <key>value</key>
+      </nest>
+   </group1>
+   <group2>
+      <abc>12345</abc>
+      <deep>
+         <id>45</id>
+      </deep>
+   </group2>
+</root>

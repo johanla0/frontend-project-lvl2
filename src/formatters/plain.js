@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 const formatValue = (value) => {
-  if (_.isPlainObject(value)) { return '[complex value]'; }
+  if (_.isObject(value)) { return '[complex value]'; }
   if (_.isString(value)) { return `'${value}'`; }
   return value;
 };

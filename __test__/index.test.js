@@ -3,8 +3,6 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { test, expect } from '@jest/globals';
 import gendiff from '../src/index.js';
-import parse from '../src/parsers.js';
-import render from '../src/formatters/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -28,13 +26,17 @@ test.each([
 });
 
 test('parse throws unsupported error', () => {
+  const file1 = getFixturePath('unsupported_file.xml');
+  const file2 = getFixturePath('nested_file2.json');
   expect(() => {
-    parse('imagine_a_stream_of_bytes', 'with_unsupported_mime_type');
+    gendiff(file1, file2);
   }).toThrowError('not supported');
 });
 
 test('render throws unsupported error', () => {
+  const file1 = getFixturePath('nested_file1.json');
+  const file2 = getFixturePath('nested_file2.json');
   expect(() => {
-    render('imagine_a_tree', 'and_unsupported_format');
+    gendiff(file1, file2, 'and_unsupported_format');
   }).toThrowError('not supported');
 });
