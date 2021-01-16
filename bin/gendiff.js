@@ -24,4 +24,4 @@ const run = () => {
   program.parse(process.argv);
 };
 
-export default run;
+export default run();
